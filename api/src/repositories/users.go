@@ -38,19 +38,19 @@ func (repo users) Create(user models.User) (uint64, error) {
 func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 	nameOrNick = fmt.Sprintf("%%%s%%", nameOrNick)
 
-	rows, err := repo.db.Query(
+	result, err := repo.db.Query(
 		"SELECT id, name, nick, created_at FROM users WHERE name LIKE ? OR nick LIKE ?",
 		nameOrNick, nameOrNick)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer result.Close()
 
 	var users []models.User
 
-	for rows.Next() {
+	for result.Next() {
 		var user models.User
-		if err = rows.Scan(
+		if err = result.Scan(
 			&user.ID,
 			&user.Name,
 			&user.Nick,
@@ -63,5 +63,44 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 	}
 
 	return users, nil
+
+}
+
+func (repo users) GetUserByID(userID uint64) (models.User, error) {
+	result, err := repo.db.Query("SELECT id, name, nick, created_at FROM users WHERE ID = ?", userID)
+	if err != nil {
+		return models.User{}, err
+	}
+	defer result.Close()
+
+	var user models.User
+
+	if result.Next() {
+		if err = result.Scan(
+			&user.ID,
+			&user.Name,
+			&user.Nick,
+			&user.Created_at,
+		); err != nil {
+			return models.User{}, err
+		}
+	}
+
+	return user, nil
+
+}
+
+func (repo users) Update(userID uint64, user models.User) error {
+	stmt, err := repo.db.Prepare("UPDATE users SET name = ?, nick = ?, email = ? WHERE ID = ?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(user.Name, user.Nick, user.Email, userID); err != nil {
+		return err
+	}
+
+	return nil
 
 }
