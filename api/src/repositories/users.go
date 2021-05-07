@@ -39,7 +39,7 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 	nameOrNick = fmt.Sprintf("%%%s%%", nameOrNick)
 
 	result, err := repo.db.Query(
-		"SELECT id, name, nick, created_at FROM users WHERE name LIKE ? OR nick LIKE ?",
+		"SELECT id, name, nick, email FROM users WHERE name LIKE ? OR nick LIKE ?",
 		nameOrNick, nameOrNick)
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 			&user.ID,
 			&user.Name,
 			&user.Nick,
-			&user.Created_at,
+			&user.Email,
 		); err != nil {
 			return nil, err
 		}
@@ -67,7 +67,7 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 }
 
 func (repo users) GetUserByID(userID uint64) (models.User, error) {
-	result, err := repo.db.Query("SELECT id, name, nick, created_at FROM users WHERE ID = ?", userID)
+	result, err := repo.db.Query("SELECT id, name, nick, enail FROM users WHERE ID = ?", userID)
 	if err != nil {
 		return models.User{}, err
 	}
@@ -80,7 +80,29 @@ func (repo users) GetUserByID(userID uint64) (models.User, error) {
 			&user.ID,
 			&user.Name,
 			&user.Nick,
-			&user.Created_at,
+			&user.Email,
+		); err != nil {
+			return models.User{}, err
+		}
+	}
+
+	return user, nil
+
+}
+
+func (repo users) GetUserByEmail(email string) (models.User, error) {
+	result, err := repo.db.Query("SELECT id, password FROM users WHERE email = ?", email)
+	if err != nil {
+		return models.User{}, err
+	}
+	defer result.Close()
+
+	var user models.User
+
+	if result.Next() {
+		if err = result.Scan(
+			&user.ID,
+			&user.Password,
 		); err != nil {
 			return models.User{}, err
 		}

@@ -40,8 +40,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	repository := repositories.UserRepository(db)
-	user.ID, err = repository.Create(user)
+	repo := repositories.UserRepository(db)
+	user.ID, err = repo.Create(user)
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return
@@ -61,8 +61,8 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	repository := repositories.UserRepository(db)
-	users, err := repository.GetUsers(nameOrNick)
+	repo := repositories.UserRepository(db)
+	users, err := repo.GetUsers(nameOrNick)
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return
@@ -88,8 +88,8 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	repository := repositories.UserRepository(db)
-	user, err := repository.GetUserByID(userID)
+	repo := repositories.UserRepository(db)
+	user, err := repo.GetUserByID(userID)
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return
@@ -132,8 +132,8 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	repository := repositories.UserRepository(db)
-	err = repository.Update(userID, user)
+	repo := repositories.UserRepository(db)
+	err = repo.Update(userID, user)
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return
@@ -160,8 +160,8 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	repository := repositories.UserRepository(db)
-	err = repository.Delete(userID)
+	repo := repositories.UserRepository(db)
+	err = repo.Delete(userID)
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return
