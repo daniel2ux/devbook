@@ -14,6 +14,8 @@ var (
 	Cnx = ""
 	// Port connection load
 	Port = 0
+	// SECRET KEY
+	SecretKey []byte
 )
 
 func Load() {
@@ -33,4 +35,6 @@ func Load() {
 		os.Getenv("DB_PASS"),
 		os.Getenv("DB_NAME"),
 	)
+
+	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 }
