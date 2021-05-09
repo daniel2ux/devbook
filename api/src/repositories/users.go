@@ -140,3 +140,18 @@ func (repo users) Delete(userID uint64) error {
 
 	return nil
 }
+
+func (repo users) Follow(userID, followerID uint64) error {
+	query := "INSERT IGNORE INTO followers (user_id, follower_id) VALUES (?,?)"
+	stmt, err := repo.db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(userID, followerID); err != nil {
+		return err
+	}
+
+	return nil
+}
