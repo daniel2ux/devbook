@@ -2,10 +2,12 @@ package controllers
 
 import (
 	"api/src/answers"
+	"api/src/auth"
 	"api/src/database"
 	"api/src/models"
 	"api/src/repositories"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -108,6 +110,17 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	userIDToken, err := auth.GetUserID(r)
+	if err != nil {
+		answers.Error(w, http.StatusUnauthorized, err)
+		return
+	}
+
+	if userID != userIDToken {
+		answers.Error(w, http.StatusForbidden, errors.New("you're only allowed to update your user"))
+		return
+	}
+
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		answers.Error(w, http.StatusUnprocessableEntity, err)
@@ -150,6 +163,17 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	userID, err := strconv.ParseUint(params["id"], 10, 64)
 	if err != nil {
 		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	userIDToken, err := auth.GetUserID(r)
+	if err != nil {
+		answers.Error(w, http.StatusUnauthorized, err)
+		return
+	}
+
+	if userID != userIDToken {
+		answers.Error(w, http.StatusForbidden, errors.New("you're only allowed to delete your user"))
 		return
 	}
 
