@@ -42,4 +42,10 @@ var usersRoutes = []Route{
 		Function:       controllers.FollowUser,
 		IsRequiredAuth: true,
 	},
+	{
+		URI:            "/users/{id}/stop-follow",
+		Method:         http.MethodPost,
+		Function:       controllers.StopFollowUser,
+		IsRequiredAuth: true,
+	},
 }

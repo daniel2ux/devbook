@@ -155,3 +155,18 @@ func (repo users) Follow(userID, followerID uint64) error {
 
 	return nil
 }
+
+func (repo users) StopFollow(userID, followerID uint64) error {
+	query := "DELETE FROM followers WHERE user_id = ? AND follower_id = ?"
+	stmt, err := repo.db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(userID, followerID); err != nil {
+		return err
+	}
+
+	return nil
+}

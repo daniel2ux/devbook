@@ -230,3 +230,40 @@ func FollowUser(w http.ResponseWriter, r *http.Request) {
 
 	answers.JSON(w, http.StatusNoContent, nil)
 }
+
+func StopFollowUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	userID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	followerID, err := auth.GetUserID(r)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	if followerID == userID {
+		answers.Error(w, http.StatusForbidden, errors.New("you cannot stop follow yourself"))
+		return
+	}
+
+	db, err := database.Connect()
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repo := repositories.UserRepository(db)
+	err = repo.StopFollow(followerID, userID)
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	answers.JSON(w, http.StatusNoContent, nil)
+}
