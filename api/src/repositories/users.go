@@ -63,7 +63,6 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 	}
 
 	return users, nil
-
 }
 
 func (repo users) GetUserByID(userID uint64) (models.User, error) {
@@ -87,7 +86,6 @@ func (repo users) GetUserByID(userID uint64) (models.User, error) {
 	}
 
 	return user, nil
-
 }
 
 func (repo users) GetUserByEmail(email string) (models.User, error) {
@@ -109,7 +107,6 @@ func (repo users) GetUserByEmail(email string) (models.User, error) {
 	}
 
 	return user, nil
-
 }
 
 func (repo users) Update(userID uint64, user models.User) error {
@@ -124,7 +121,6 @@ func (repo users) Update(userID uint64, user models.User) error {
 	}
 
 	return nil
-
 }
 
 func (repo users) Delete(userID uint64) error {
@@ -169,4 +165,33 @@ func (repo users) StopFollow(userID, followerID uint64) error {
 	}
 
 	return nil
+}
+
+func (repo users) GetFollowers(userID uint64) ([]models.User, error) {
+	query := `SELECT u.id, u.name, u.nick, u.email
+	            FROM users u INNER JOIN followers f on u.id = f.follower_id
+			   WHERE f.user_id = ?`
+	result, err := repo.db.Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer result.Close()
+
+	var followers []models.User
+
+	for result.Next() {
+		var follower models.User
+		if err = result.Scan(
+			&follower.ID,
+			&follower.Name,
+			&follower.Nick,
+			&follower.Email,
+		); err != nil {
+			return nil, err
+		}
+
+		followers = append(followers, follower)
+	}
+
+	return followers, nil
 }
