@@ -195,3 +195,65 @@ func (repo users) GetFollowers(userID uint64) ([]models.User, error) {
 
 	return followers, nil
 }
+
+func (repo users) GetFollows(userID uint64) ([]models.User, error) {
+	query := `SELECT u.id, u.name, u.nick, u.email
+	            FROM users u INNER JOIN followers f on u.id = f.user_id
+			   WHERE f.follower_id = ?`
+	result, err := repo.db.Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer result.Close()
+
+	var follows []models.User
+
+	for result.Next() {
+		var follow models.User
+		if err = result.Scan(
+			&follow.ID,
+			&follow.Name,
+			&follow.Nick,
+			&follow.Email,
+		); err != nil {
+			return nil, err
+		}
+
+		follows = append(follows, follow)
+	}
+
+	return follows, nil
+}
+
+func (repo users) GetPassByID(userID uint64) (string, error) {
+	query := `SELECT password FROM users WHERE id = ?`
+	result, err := repo.db.Query(query, userID)
+	if err != nil {
+		return "", err
+	}
+	defer result.Close()
+
+	var user models.User
+
+	if result.Next() {
+		if err = result.Scan(&user.Password); err != nil {
+			return "", err
+		}
+	}
+
+	return user.Password, nil
+}
+
+func (repo users) UpdatePassword(userID uint64, password string) error {
+	stmt, err := repo.db.Prepare("UPDATE users SET password = ? WHERE ID = ?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(password, userID); err != nil {
+		return err
+	}
+
+	return nil
+}

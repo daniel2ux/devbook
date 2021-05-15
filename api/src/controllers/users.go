@@ -6,6 +6,7 @@ import (
 	"api/src/database"
 	"api/src/models"
 	"api/src/repositories"
+	"api/src/security"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -291,5 +292,92 @@ func GetFollowers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	answers.JSON(w, http.StatusOK, followers)
+}
+
+func GetFollows(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	userID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	db, err := database.Connect()
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repo := repositories.UserRepository(db)
+	follows, err := repo.GetFollows(userID)
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	answers.JSON(w, http.StatusOK, follows)
+}
+
+func UpdatePass(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	userID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	userIDToken, err := auth.GetUserID(r)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	if userIDToken != userID {
+		answers.Error(w, http.StatusForbidden, errors.New("you cannot update pass"))
+		return
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+
+	var pass models.Paswword
+	if err := json.Unmarshal(body, &pass); err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	db, err := database.Connect()
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repo := repositories.UserRepository(db)
+	savedPass, err := repo.GetPassByID(userIDToken)
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	if err := security.CheckPassword(savedPass, pass.Actual); err != nil {
+		answers.Error(w, http.StatusUnauthorized, err)
+		return
+	}
+
+	passWithHash, err := security.Hash(pass.New)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	if err := repo.UpdatePassword(userID, string(passWithHash)); err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	answers.JSON(w, http.StatusOK, nil)
 
 }
