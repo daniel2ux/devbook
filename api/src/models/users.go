@@ -67,5 +67,4 @@ func (user *User) format(step string) error {
 	}
 
 	return nil
-
 }
