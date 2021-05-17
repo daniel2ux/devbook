@@ -194,6 +194,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusNoContent, nil)
 }
 
+//FollowUser set follow by user
 func FollowUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -231,6 +232,7 @@ func FollowUser(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusNoContent, nil)
 }
 
+//StopFollowUser stop follow by user
 func StopFollowUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -268,6 +270,7 @@ func StopFollowUser(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusNoContent, nil)
 }
 
+//GetFollowers
 func GetFollowers(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -294,6 +297,7 @@ func GetFollowers(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusOK, followers)
 }
 
+//GetFollows
 func GetFollows(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -320,6 +324,7 @@ func GetFollows(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusOK, follows)
 }
 
+//UpdatePass
 func UpdatePass(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -379,5 +384,4 @@ func UpdatePass(w http.ResponseWriter, r *http.Request) {
 	}
 
 	answers.JSON(w, http.StatusOK, nil)
-
 }
