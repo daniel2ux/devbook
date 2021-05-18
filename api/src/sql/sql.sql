@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS devbook;
 
 USE devbook;
 
-DROP TABLE IF EXISTS publications;
+DROP TABLE IF EXISTS posts;
 
 DROP TABLE IF EXISTS followers;
 
@@ -25,7 +25,7 @@ CREATE TABLE followers (
     PRIMARY KEY (user_id, follower_id)
 ) ENGINE = INNODB;
 
-CREATE TABLE publications (
+CREATE TABLE posts (
     id int AUTO_INCREMENT PRIMARY KEY,
     title varchar(50) NOT NULL,
     content varchar(300) NOT NULL,
