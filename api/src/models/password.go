@@ -1,6 +1,6 @@
 package models
 
-type Paswword struct {
+type Password struct {
 	New    string `json:"new"`
 	Actual string `json:"actual"`
 }

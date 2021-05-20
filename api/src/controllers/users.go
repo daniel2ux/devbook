@@ -340,9 +340,9 @@ func UpdatePass(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := ioutil.ReadAll(r.Body)
+	var pass models.Password
+	body, _ := ioutil.ReadAll(r.Body)
 
-	var pass models.Paswword
 	if err := json.Unmarshal(body, &pass); err != nil {
 		answers.Error(w, http.StatusBadRequest, err)
 		return
@@ -379,5 +379,4 @@ func UpdatePass(w http.ResponseWriter, r *http.Request) {
 	}
 
 	answers.JSON(w, http.StatusOK, nil)
-
 }
