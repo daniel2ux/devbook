@@ -7,31 +7,31 @@ import (
 
 var postsRoute = []Route{
 	{
-		URI:            "/post",
+		URI:            "/posts",
 		Method:         http.MethodPost,
 		Function:       controllers.NewPost,
 		IsRequiredAuth: true,
 	},
 	{
-		URI:            "/post",
+		URI:            "/posts",
 		Method:         http.MethodGet,
 		Function:       controllers.GetPosts,
 		IsRequiredAuth: true,
 	},
 	{
-		URI:            "/post/{id}",
+		URI:            "/posts/{id}",
 		Method:         http.MethodGet,
 		Function:       controllers.GetPost,
 		IsRequiredAuth: true,
 	},
 	{
-		URI:            "/post/{id}",
+		URI:            "/posts/{id}",
 		Method:         http.MethodPut,
 		Function:       controllers.UpdatePost,
 		IsRequiredAuth: true,
 	},
 	{
-		URI:            "/post/{id}",
+		URI:            "/posts/{id}",
 		Method:         http.MethodDelete,
 		Function:       controllers.DeletePost,
 		IsRequiredAuth: true,
