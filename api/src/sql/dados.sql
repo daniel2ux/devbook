@@ -1,5 +1,5 @@
 INSERT INTO
-    users (name, nick, email, password)
+    users (name, nick, email, PASSWORD)
 VALUES
     (
         "User 1",
@@ -39,3 +39,11 @@ VALUES
 --     (1, 4),
 --     (2, 3),
 --     (3, 2);
+INSERT INTO
+    posts (title, content, author_id)
+VALUES
+    ("Post User One", "Post by user one", 1),
+    ("Post User TWO", "Post by user two", 2),
+    ("Post User Three", "Post by user three", 3),
+    ("Post User Four", "Post by user four", 4),
+    ("Post User Five", "Post by user five", 5)
