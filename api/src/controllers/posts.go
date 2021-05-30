@@ -7,6 +7,7 @@ import (
 	"api/src/models"
 	"api/src/repositories"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -108,9 +109,100 @@ func GetPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
+	userID, err := auth.GetUserID(r)
+	if err != nil {
+		answers.Error(w, http.StatusUnauthorized, err)
+		return
+	}
 
+	params := mux.Vars(r)
+	postID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	db, err := database.Connect()
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repo := repositories.PostRepository(db)
+	postByDB, err := repo.GetByID(postID)
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	if postByDB.AuthorID != userID {
+		answers.Error(w, http.StatusForbidden, errors.New("update not allowed"))
+		return
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		answers.Error(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	var post models.Post
+	if err := json.Unmarshal(body, &post); err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	if err = post.Prepare(); err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	if err = repo.Update(postID, post); err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	answers.JSON(w, http.StatusOK, nil)
 }
 
 func DeletePost(w http.ResponseWriter, r *http.Request) {
+	userID, err := auth.GetUserID(r)
+	if err != nil {
+		answers.Error(w, http.StatusUnauthorized, err)
+		return
+	}
 
+	params := mux.Vars(r)
+	postID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		answers.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	db, err := database.Connect()
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repo := repositories.PostRepository(db)
+	postByDB, err := repo.GetByID(postID)
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	if postByDB.AuthorID != userID {
+		answers.Error(w, http.StatusForbidden, errors.New("delete not allowed"))
+		return
+	}
+
+	if err := repo.Delete(postID); err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	answers.JSON(w, http.StatusOK, nil)
 }
