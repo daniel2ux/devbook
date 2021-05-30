@@ -69,7 +69,7 @@ func (repo posts) GetPosts(userID uint64) ([]models.Post, error) {
 	result, err := repo.db.Query(`
 		SELECT DISTINCT p.*, u.nick
 		  FROM posts p INNER JOIN users u
-		    		      ON u.id = p.author_Id
+		    		      ON u.id = p.author_id
 					   INNER JOIN followers f
 					      ON p.author_id = f.user_id
 		 WHERE u.id = ?
@@ -102,4 +102,32 @@ func (repo posts) GetPosts(userID uint64) ([]models.Post, error) {
 	}
 
 	return posts, nil
+}
+
+func (repo posts) Update(postID uint64, post models.Post) error {
+	stmt, err := repo.db.Prepare("UPDATE posts SET title=?, content=? WHERE id=?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(post.Title, post.Content, postID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repo posts) Delete(postID uint64) error {
+	stmt, err := repo.db.Prepare("DELETE FROM posts WHERE id=?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(postID); err != nil {
+		return err
+	}
+
+	return nil
 }
