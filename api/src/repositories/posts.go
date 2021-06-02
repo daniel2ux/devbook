@@ -166,3 +166,35 @@ func (repo posts) GetPostsByUser(userID uint64) ([]models.Post, error) {
 
 	return posts, nil
 }
+
+func (repo posts) Like(postID uint64) error {
+	stmt, err := repo.db.Prepare("UPDATE posts SET likes = likes + 1 WHERE id=?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(postID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repo posts) Dislike(postID uint64) error {
+	stmt, err := repo.db.Prepare(`
+		UPDATE posts SET likes = 
+			CASE WHEN likes > 0 THEN likes - 1 
+			ELSE likes END 
+		 WHERE id = ?`)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	if _, err := stmt.Exec(postID); err != nil {
+		return err
+	}
+
+	return nil
+}
