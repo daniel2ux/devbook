@@ -12,4 +12,10 @@ var userRoutes = []Route{
 		Function:       controllers.LoadUserEnrollPage,
 		IsRequiredAuth: false,
 	},
+	{
+		URI:            "/users",
+		Method:         http.MethodPost,
+		Function:       controllers.EnrollUser,
+		IsRequiredAuth: false,
+	},
 }
