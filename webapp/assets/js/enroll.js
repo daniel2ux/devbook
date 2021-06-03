@@ -5,7 +5,7 @@ function enroll(e) {
 
     if ($('#password').val() != $('#repass').val()) {
         alert('Atention! Passwords no match');
-        return
+        return;
     }
 
     $.ajax({
@@ -16,6 +16,13 @@ function enroll(e) {
             nick: $('#nick').val(),
             email: $('#email').val(),
             password: $('#password').val(),
-        }
+        },
     })
+        .done(function () {
+            alert('user enrolled success');
+        })
+        .fail(function (err) {
+            console.log(err);
+            alert('enroll failed');
+        });
 }

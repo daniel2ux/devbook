@@ -3,9 +3,8 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
+	"webapp/src/answers"
 )
 
 func EnrollUser(w http.ResponseWriter, r *http.Request) {
@@ -19,15 +18,21 @@ func EnrollUser(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		answers.JSON(w, http.StatusBadRequest, answers.APIError{Error: err.Error()})
+		return
 	}
 
 	response, err := http.Post("http://localhost:5000/users", "application/json", bytes.NewReader(user))
 	if err != nil {
-		log.Fatal(err)
+		answers.JSON(w, http.StatusInternalServerError, answers.APIError{Error: err.Error()})
+		return
 	}
 	defer response.Body.Close()
 
-	fmt.Println(response.Body)
+	if response.StatusCode >= 400 {
+		answers.CheckStatusCodeError(w, response)
+		return
+	}
 
+	answers.JSON(w, response.StatusCode, nil)
 }
