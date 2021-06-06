@@ -3,8 +3,10 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"webapp/src/answers"
+	"webapp/src/config"
 )
 
 func EnrollUser(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +24,8 @@ func EnrollUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := http.Post("http://localhost:5000/users", "application/json", bytes.NewReader(user))
+	url := fmt.Sprintf("%s/users", config.APIURL)
+	response, err := http.Post(url, "application/json", bytes.NewReader(user))
 	if err != nil {
 		answers.JSON(w, http.StatusInternalServerError, answers.APIError{Error: err.Error()})
 		return

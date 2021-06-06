@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"webapp/src/answers"
+	"webapp/src/config"
+	"webapp/src/models"
 )
 
 func DoLogin(w http.ResponseWriter, r *http.Request) {
@@ -21,13 +22,24 @@ func DoLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := http.Post("http://localhost:5000/login", "application/json", bytes.NewBuffer(user))
+	url := fmt.Sprintf("%s/login", config.APIURL)
+	response, err := http.Post(url, "application/json", bytes.NewBuffer(user))
 	if err != nil {
 		answers.JSON(w, http.StatusInternalServerError, answers.APIError{Error: err.Error()})
 		return
 	}
+	defer response.Body.Close()
 
-	token, _ := ioutil.ReadAll(response.Body)
+	if response.StatusCode >= 400 {
+		answers.CheckStatusCodeError(w, response)
+		return
+	}
 
-	fmt.Println(response.StatusCode, string(token))
+	var authData models.AuthData
+	if err := json.NewDecoder(response.Body).Decode(&authData); err != nil {
+		answers.JSON(w, http.StatusUnprocessableEntity, answers.APIError{Error: err.Error()})
+		return
+	}
+
+	answers.JSON(w, http.StatusOK, nil)
 }
