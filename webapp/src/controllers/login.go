@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"webapp/src/answers"
 	"webapp/src/config"
+	"webapp/src/cookies"
 	"webapp/src/models"
 )
 
@@ -37,6 +38,11 @@ func DoLogin(w http.ResponseWriter, r *http.Request) {
 
 	var authData models.AuthData
 	if err := json.NewDecoder(response.Body).Decode(&authData); err != nil {
+		answers.JSON(w, http.StatusUnprocessableEntity, answers.APIError{Error: err.Error()})
+		return
+	}
+
+	if err = cookies.Save(w, authData.ID, authData.Token); err != nil {
 		answers.JSON(w, http.StatusUnprocessableEntity, answers.APIError{Error: err.Error()})
 		return
 	}

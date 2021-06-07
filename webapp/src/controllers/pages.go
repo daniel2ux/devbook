@@ -12,3 +12,7 @@ func LoadLoginScreen(w http.ResponseWriter, r *http.Request) {
 func LoadUserEnrollPage(w http.ResponseWriter, r *http.Request) {
 	utils.LoadTemplate(w, "enroll.html", nil)
 }
+
+func LoadMainPage(w http.ResponseWriter, r *http.Request) {
+	utils.LoadTemplate(w, "home.html", nil)
+}
