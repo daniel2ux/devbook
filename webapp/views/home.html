@@ -8,5 +8,10 @@
     </head>
     <body>
         <h1>Main Page</h1>
+        {{ range . }}
+        <h4>{{ .Title }}</h4>
+        <p>{{ .Content }}</p>
+        <hr />
+        {{ end }}
     </body>
 </html>
