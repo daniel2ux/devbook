@@ -66,6 +66,24 @@
                         Publish
                     </button>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                    {{ range . }}
+                    <div class="card border border-dark mb-3">
+                        <div class="card-header">
+                            <strong>{{ .Title }}</strong>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text text-dark">{{ .Content }}</p>
+                            <a href="#" class="text-muted"
+                                >{{ .AuthorNick }} - {{ .CreateAt }}</a
+                            >
+                        </div>
+                        <div class="card-footer">
+                            <p>Buttons</p>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
             </div>
         </div>
 
