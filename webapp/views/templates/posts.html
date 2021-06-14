@@ -1,13 +1,14 @@
 {{ define "likes" }}
-<span>{{ .Likes }} likes</span>
+<i class="fa fa-heart text-primary"></i>
+<span>{{ .Likes }}</span>
 {{ end }}
 
 {{ define "edit" }}
-<a href="/edit" class="btn btn-sm btn-primary">Edit</a>
+<a href="/edit" style="text-decoration: none;"><i class="fa fa-edit"></i></a>
 {{ end }}
 
 {{ define "delete" }}
-<a href="/delete" class="btn btn-sm btn-danger">Delete</a>
+<a href="/delete" style="text-decoration: none;"><i class="fa fa-trash text-danger"></i></a>
 {{ end }}
 
 {{ define "like" }}
@@ -15,17 +16,17 @@
 {{ end }}
 
 {{ define "post-default" }}
-<div class="card-header">{{ .CreateAt.Format "02-01-2006" }} - {{ template "likes" . }}</div>
+<div class="card-header">{{ .CreateAt.Format "02-01-2006" }}</div>
 {{ end }}
 
 {{ define "post-with-allow" }}
-<div class="card mb-2 bg-light" data-post-id="{{ .ID }}">
-    <!-- {{ template "post-default" . }} -->
+<div class="card mb-2" data-post-id="{{ .ID }}">
+    {{ template "post-default" . }}
     <div class="card-body">
         <h5 class="card-title">{{ .Title }}</h5>
         <p class="card-text">{{ .Content }}</p>
         <hr class="my-4">
-        {{ .CreateAt.Format "02-01-2006" }} - {{ template "likes" . }}
+        {{ template "likes" . }}
         {{ template "edit" }}
         {{ template "delete" }}
     </div>
@@ -34,13 +35,12 @@
 
 {{ define "post-without-allow" }}
 <div class="card mb-2" data-post-id="{{ .ID }}">
-    <!-- {{ template "post-default" . }} -->
+    {{ template "post-default" . }}
     <div class="card-body">
         <h5 class="card-title">{{ .Title }}</h5>
         <p class="card-text">{{ .Content }}</p>
         <hr class="my-4">
-        {{ .CreateAt.Format "02-01-2006" }} - {{ template "likes" . }}
-        {{ template "like" }}
+        {{ template "likes" . }}
     </div>
 </div>
 {{ end }}
