@@ -1,5 +1,5 @@
 {{ define "likes" }}
-<i class="fa fa-heart text-primary"></i>
+<i class="fas fa-heart text-primary like-post"></i>
 <span>{{ .Likes }}</span>
 {{ end }}
 
@@ -9,10 +9,6 @@
 
 {{ define "delete" }}
 <a href="/delete" style="text-decoration: none;"><i class="fa fa-trash text-danger"></i></a>
-{{ end }}
-
-{{ define "like" }}
-<a href="/likes" class="btn btn-sm btn-secondary">Like</a>
 {{ end }}
 
 {{ define "post-default" }}
