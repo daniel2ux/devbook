@@ -1,20 +1,20 @@
-$('#login').on('submit', doLogin);
+$("#login").on("submit", login);
 
-function doLogin(e) {
+function login(e) {
     e.preventDefault();
 
     $.ajax({
-        url: '/login',
-        method: 'POST',
-        data: {
-            email: $('#email').val(),
-            password: $('#password').val(),
-        },
-    })
+            url: '/login',
+            method: 'POST',
+            data: {
+                email: $('#email').val(),
+                password: $('#password').val(),
+            },
+        })
         .done(function () {
             window.location = '/home';
         })
-        .fail(function () {
-            alert('Login failed');
+        .fail(function (err) {
+            console.log(err);
         });
 }

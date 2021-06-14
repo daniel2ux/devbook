@@ -1,4 +1,4 @@
-$('#form-enroll-user').on('submit', enroll);
+$("#form-enroll-user").on("submit", enroll);
 
 function enroll(e) {
     e.preventDefault();
@@ -9,20 +9,19 @@ function enroll(e) {
     }
 
     $.ajax({
-        url: '/users',
-        method: 'POST',
-        data: {
-            name: $('#name').val(),
-            nick: $('#nick').val(),
-            email: $('#email').val(),
-            password: $('#password').val(),
-        },
-    })
+            url: '/users',
+            method: 'POST',
+            data: {
+                name: $('#name').val(),
+                nick: $('#nick').val(),
+                email: $('#email').val(),
+                password: $('#password').val(),
+            },
+        })
         .done(function () {
             alert('user enrolled success');
         })
         .fail(function (err) {
-            console.log(err);
-            alert('enroll failed');
+            alert(err);
         });
 }

@@ -6,13 +6,13 @@ function newPost(e) {
     e.preventDefault();
 
     $.ajax({
-        url: '/posts',
-        method: 'POST',
-        data: {
-            title: $('#title').val(),
-            post: $('#post').val(),
-        },
-    })
+            url: '/posts',
+            method: 'POST',
+            data: {
+                title: $('#title').val(),
+                post: $('#post').val(),
+            },
+        })
         .done(function () {
             window.location = '/home';
         })
@@ -28,9 +28,9 @@ function likePost(e) {
     clickedElement.prop('disabled', true);
 
     $.ajax({
-        url: `posts/${postID}/like`,
-        method: 'POST',
-    })
+            url: `posts/${postID}/like`,
+            method: 'POST',
+        })
         .done(function () {
             const likeCounter = clickedElement.next('span');
             const likeQtdy = parseInt(likeCounter.text());
@@ -55,9 +55,9 @@ function dislikePost(e) {
     clickedElement.prop('disabled', true);
 
     $.ajax({
-        url: `posts/${postID}/dislike`,
-        method: 'POST',
-    })
+            url: `posts/${postID}/dislike`,
+            method: 'POST',
+        })
         .done(function () {
             const likeCounter = clickedElement.next('span');
             const likeQtdy = parseInt(likeCounter.text());
