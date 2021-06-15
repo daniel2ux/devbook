@@ -4,7 +4,7 @@
 {{ end }}
 
 {{ define "edit" }}
-<a href="/edit" style="text-decoration: none;"><i class="fa fa-edit"></i></a>
+<a href="/posts/{{ .ID }}/edit" style="text-decoration: none;"><i class="fa fa-edit"></i></a>
 {{ end }}
 
 {{ define "delete" }}
@@ -23,8 +23,8 @@
         <p class="card-text">{{ .Content }}</p>
         <hr class="my-4">
         {{ template "likes" . }}
-        {{ template "edit" }}
-        {{ template "delete" }}
+        {{ template "edit" . }}
+        {{ template "delete" . }}
     </div>
 </div>
 {{ end }}
