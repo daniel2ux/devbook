@@ -30,4 +30,10 @@ var postRoutes = []Route{
 		Function:       controllers.LoadEditPage,
 		IsRequiredAuth: true,
 	},
+	{
+		URI:            "/posts/{id}",
+		Method:         http.MethodPut,
+		Function:       controllers.UpdatePost,
+		IsRequiredAuth: true,
+	},
 }

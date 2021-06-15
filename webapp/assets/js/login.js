@@ -1,4 +1,4 @@
-$("#login").on("submit", login);
+$('#login').on('submit', login);
 
 function login(e) {
     e.preventDefault();

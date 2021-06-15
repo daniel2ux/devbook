@@ -1,0 +1,11 @@
+/* html,
+body {
+    min-height: 100%;
+    position: relative;
+} */
+
+footer {
+    min-width: 100%;
+    position: absolute;
+    bottom: 0;
+}

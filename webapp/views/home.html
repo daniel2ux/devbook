@@ -1,55 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DevBook</title>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevBook</title>
+        <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+    </head>
 
-    <link rel="stylesheet" href="/assets/css/bootstrap.css" />
-</head>
+    <body>
+        {{ template "_header" }}
 
-<body>
-    {{ template "_header" }}
-
-    <div class="container">
-        <div class="container-fluid">
-            <div class="row mt-4">
-                <h3 class="mb-3">Post</h3>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                    <form id="new-post">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" name="title" required />
-                        </div>
-                        <div class="mb-3">
-                            <label for="post" class="form-label">Post</label>
-                            <textarea class="form-control" id="post" name="post" rows="3" required></textarea>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary mb-3">
-                                Publish
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                    {{ range .Posts }}
-                    {{ if (eq .AuthorID $.UserID) }}
-                    {{ template "post-with-allow" . }}
-                    {{ else }}
-                    {{ template "post-without-allow" . }}
-                    {{ end }}
-                    {{ end }}
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row mt-4">
+                    <h3 class="mb-3">Post</h3>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <form id="new-post">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">
+                                    Title
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="title"
+                                    name="title"
+                                    required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="post" class="form-label">
+                                    Post
+                                </label>
+                                <textarea
+                                    class="form-control"
+                                    id="post"
+                                    name="post"
+                                    rows="3"
+                                    required
+                                ></textarea>
+                            </div>
+                            <div>
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary mb-3"
+                                >
+                                    Publish
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                        {{ range .Posts }} 
+                            {{ if (eq .AuthorID $.UserID) }} 
+                                {{ template "post-with-allow" . }} 
+                            {{ else }} 
+                                {{ template "post-without-allow" . }} 
+                            {{ end }} 
+                        {{ end }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{ template "_footer" }}
-    {{ template "_scripts" }}
+        {{ template "_footer" }} {{ template "_scripts" }}
 
-    <script src="/assets/js/posts.js"></script>
-</body>
-
+        <script src="/assets/js/posts.js"></script>
+    </body>
 </html>

@@ -1,6 +1,7 @@
 $('#new-post').on('submit', newPost);
 $(document).on('click', '.like-post', likePost);
 $(document).on('click', '.dislike-post', dislikePost);
+$('#btn-update').on('click', updatePost);
 
 function newPost(e) {
     e.preventDefault();
@@ -73,4 +74,29 @@ function dislikePost(e) {
         .always(function () {
             clickedElement.prop('disabled', false);
         });
+}
+
+function updatePost() {
+    $(this).prop('disabled', true);
+
+    const postID = $(this).data('post-id');
+
+    $.ajax({
+            url: `/posts/${postID}`,
+            method: 'PUT',
+            data: {
+                title: $('#title').val(),
+                post: $('#post').val(),
+            }
+        })
+        .done(function () {
+            alert('post updated...')
+        })
+        .fail(function (err) {
+            console.log(err)
+            alert('update fail!')
+        })
+        .always(function () {
+            $('#btn-update').prop('disabled', false);
+        })
 }
