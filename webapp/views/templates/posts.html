@@ -1,42 +1,53 @@
 {{ define "likes" }}
-<i class="fas fa-heart text-primary like-post"></i>
-<span>{{ .Likes }}</span>
-{{ end }}
+    <i class="fas fa-heart text-primary like-post"></i>
+    <span>{{ .Likes }}</span>
+{{ end }} 
 
 {{ define "edit" }}
-<a href="/posts/{{ .ID }}/edit" style="text-decoration: none;"><i class="fa fa-edit"></i></a>
-{{ end }}
+    <a href="/posts/{{ .ID }}/edit" style="text-decoration: none">
+        <i class="fa fa-edit"></i>
+    </a>
+{{ end }} 
 
 {{ define "delete" }}
-<a href="/delete" style="text-decoration: none;"><i class="fa fa-trash text-danger"></i></a>
-{{ end }}
+    <a href="/delete" style="text-decoration: none"	>
+        <i class="fa fa-trash text-danger"></i>
+    </a>
+{{ end }} 
 
-{{ define "post-default" }}
-<div class="card-header">{{ .CreateAt.Format "02-01-2006" }}</div>
-{{ end }}
+{{ define "post-author" }}
+    {{ .CreateAt.Format "02-01-2006" }} {{ .AuthorNick }}
+{{ end }} 
 
 {{ define "post-with-allow" }}
-<div class="card mb-2" data-post-id="{{ .ID }}">
-    {{ template "post-default" . }}
-    <div class="card-body">
-        <h5 class="card-title">{{ .Title }}</h5>
-        <p class="card-text">{{ .Content }}</p>
-        <hr class="my-4">
-        {{ template "likes" . }}
-        {{ template "edit" . }}
-        {{ template "delete" . }}
+    <div class="card mb-2" data-post-id="{{ .ID }}">
+	    <div class="card-body">
+		    <h5 class="card-title">{{ .Title }}</h5>
+		    <div class="card-text">
+                {{ .Content }}
+                <p class="text-muted mt-4 footer-post">
+                    <i class="far fa-calendar-alt"></i> {{ .CreateAt.Format "02-01-2006" }} 
+                    <i class="fas fa-user-circle"></i> {{ .AuthorNick }}
+                </p>
+            </div>
+		    <hr class="my-4" />
+		    {{ template "likes" . }} 
+            {{ template "edit" . }} 
+            {{ template "delete" . }}
+	    </div>
     </div>
-</div>
-{{ end }}
+{{ end }} 
 
 {{ define "post-without-allow" }}
-<div class="card mb-2" data-post-id="{{ .ID }}">
-    {{ template "post-default" . }}
-    <div class="card-body">
-        <h5 class="card-title">{{ .Title }}</h5>
-        <p class="card-text">{{ .Content }}</p>
-        <hr class="my-4">
-        {{ template "likes" . }}
+    <div class="card mb-2" data-post-id="{{ .ID }}">
+	    <div class="card-body">
+		    <h5 class="card-title">{{ .Title }}</h5>
+		    <div class="card-text">
+                {{ .Content }}
+                {{ template "post-author" }}
+            </div>
+		    <hr class="my-4" />
+		    {{ template "likes" . }}
+	    </div>
     </div>
-</div>
 {{ end }}
