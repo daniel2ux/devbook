@@ -124,3 +124,27 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 
 	answers.JSON(w, response.StatusCode, nil)
 }
+
+func DeletePost(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	postID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		answers.JSON(w, http.StatusBadRequest, answers.APIError{Error: err.Error()})
+		return
+	}
+
+	url := fmt.Sprintf("%s/posts/%d", config.APIURL, postID)
+	response, err := requests.RequestWithAuth(r, http.MethodDelete, url, nil)
+	if err != nil {
+		answers.JSON(w, http.StatusInternalServerError, answers.APIError{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		answers.CheckStatusCodeError(w, response)
+		return
+	}
+
+	answers.JSON(w, response.StatusCode, nil)
+}

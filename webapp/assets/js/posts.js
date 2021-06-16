@@ -2,6 +2,7 @@ $('#new-post').on('submit', newPost);
 $(document).on('click', '.like-post', likePost);
 $(document).on('click', '.dislike-post', dislikePost);
 $('#btn-update').on('click', updatePost);
+$('.delete-post').on('click', deletePost);
 
 function newPost(e) {
     e.preventDefault();
@@ -99,4 +100,28 @@ function updatePost() {
         .always(function () {
             $('#btn-update').prop('disabled', false);
         })
+}
+
+function deletePost(e) {
+    e.preventDefault();
+    const clickedElement = $(e.target);
+    const post = clickedElement.closest('.card')
+    const postID = post.data('post-id');
+    clickedElement.prop('disabled', true);
+
+    $.ajax({
+            url: `/posts/${postID}`,
+            method: 'DELETE',
+        })
+        .done(function () {
+            post.fadeOut("slow", function () {
+                $(this).remove();
+            })
+        })
+        .fail(function (err) {
+            alert('delete fail!')
+        })
+        .always(function () {
+            clickedElement.prop('disabled', false);
+        });
 }
