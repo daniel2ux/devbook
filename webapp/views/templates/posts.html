@@ -18,7 +18,7 @@
 {{ end }} 
 
 {{ define "post-with-allow" }}
-    <div class="card mb-2" data-post-id="{{ .ID }}">
+    <div class="card mb-2 shadow-sm" data-post-id="{{ .ID }}">
 	    <div class="card-body">
 		    <h5 class="card-title">{{ .Title }}</h5>
 		    <div class="card-text">
@@ -42,7 +42,10 @@
 		    <h5 class="card-title">{{ .Title }}</h5>
 		    <div class="card-text">
                 {{ .Content }}
-                {{ template "post-author" }}
+                <p class="text-muted mt-4 footer-post">
+                    <i class="far fa-calendar-alt"></i> {{ .CreateAt.Format "02-01-2006" }} 
+                    <i class="fas fa-user-circle"></i> {{ .AuthorNick }}
+                </p>
             </div>
 		    <hr class="my-4" />
 		    {{ template "likes" . }}
