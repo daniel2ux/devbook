@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
 		<title>DevBook Edit Post - {{ .Title }}</title>
 
-		<link rel="stylesheet" href="/assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="/assets/css/footer.css" />
+		<link
+			rel="stylesheet"
+			href="/assets/css/bootstrap.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="/assets/css/footer.css"
+		/>
 	</head>
 
 	<body>
@@ -16,7 +29,7 @@
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row mt-4">
-					<div class="col-12">
+					<div class="col-6">
 						<h3>Edit Post</h3>
 						<div class="form-group">
 							<label for="title">Title</label>
@@ -35,8 +48,7 @@
 								id="post"
 								class="form-control my-2"
 								rows="10"
-							>{{ .Content }}</textarea
-							>
+							>{{ .Content }}</textarea>
 						</div>
 						<button
 							type="button"
@@ -46,7 +58,11 @@
 						>
 							Update
 						</button>
-						<a href="/home" type="button" class="btn btn-danger">
+						<a
+							href="/home"
+							type="button"
+							class="btn btn-danger"
+						>
 							Cancel
 						</a>
 					</div>
@@ -54,9 +70,10 @@
 			</div>
 		</div>
 
-		{{ template "_footer" }} 
+		{{ template "_footer" }}
 		{{ template "_scripts" }}
 
 		<script src="/assets/js/posts.js"></script>
 	</body>
+
 </html>

@@ -1,54 +1,70 @@
 {{ define "likes" }}
-    <i class="fas fa-heart text-primary like-post" style="cursor:pointer;"></i>
-    <span>{{ .Likes }}</span>
-{{ end }} 
+<i
+    class="fas fa-heart text-primary like-post"
+    style="cursor: pointer"
+></i>
+<span>{{ .Likes }}</span>
+{{ end }}
 
 {{ define "edit" }}
-    <a href="/posts/{{ .ID }}/edit" style="text-decoration: none">
-        <i class="fa fa-edit"></i>
-    </a>
-{{ end }} 
+<a
+    href="/posts/{{ .ID }}/edit"
+    style="text-decoration: none"
+>
+    <i class="fa fa-edit"></i>
+</a>
+{{ end }}
 
 {{ define "delete" }}
-    <i class="fa fa-trash text-danger delete-post" style="cursor:pointer;"></i>
-{{ end }} 
+<i
+    class="fa fa-trash text-danger delete-post"
+    style="cursor: pointer"
+></i>
+{{ end }}
 
 {{ define "post-author" }}
-    {{ .CreateAt.Format "02-01-2006" }} {{ .AuthorNick }}
-{{ end }} 
+{{ .CreateAt.Format "02-01-2006" }}
+{{.AuthorNick }}
+{{ end }}
 
 {{ define "post-with-allow" }}
-    <div class="card mb-2 shadow-sm" data-post-id="{{ .ID }}">
-	    <div class="card-body">
-		    <h5 class="card-title">{{ .Title }}</h5>
-		    <div class="card-text">
-                {{ .Content }}
-                <p class="text-muted mt-4 footer-post">
-                    <i class="far fa-calendar-alt"></i> {{ .CreateAt.Format "02-01-2006" }} 
-                    <i class="fas fa-user-circle"></i> {{ .AuthorNick }}
-                </p>
-            </div>
-		    <hr class="my-4" />
-		    {{ template "likes" . }} 
-            {{ template "edit" . }} 
-            {{ template "delete" . }}
-	    </div>
+<div
+    class="card mb-2 bg-light"
+    data-post-id="{{ .ID }}"
+>
+    <div class="card-body">
+        <h5 class="card-title">{{ .Title }}</h5>
+        <div class="card-text">
+            {{ .Content }}
+            <p class="text-muted mt-4 footer-post">
+                <i class="far fa-calendar-alt"></i> {{ .CreateAt.Format "02-01-2006" }}
+                <i class="fas fa-user-circle"></i> {{ .AuthorNick }}
+            </p>
+        </div>
+        <hr class="my-4" />
+        {{ template "likes" . }}
+        {{ template "edit" . }}
+        {{ template "delete" . }}
     </div>
-{{ end }} 
+</div>
+{{ end }}
 
 {{ define "post-without-allow" }}
-    <div class="card mb-2" data-post-id="{{ .ID }}">
-	    <div class="card-body">
-		    <h5 class="card-title">{{ .Title }}</h5>
-		    <div class="card-text">
-                {{ .Content }}
-                <p class="text-muted mt-4 footer-post">
-                    <i class="far fa-calendar-alt"></i> {{ .CreateAt.Format "02-01-2006" }} 
-                    <i class="fas fa-user-circle"></i> {{ .AuthorNick }}
-                </p>
-            </div>
-		    <hr class="my-4" />
-		    {{ template "likes" . }}
-	    </div>
+<div
+    class="card mb-2 bg-light"
+    data-post-id="{{ .ID }}"
+>
+    <div class="card-body">
+        <h5 class="card-title">{{ .Title }}</h5>
+        <div class="card-text">
+            {{ .Content }}
+            <p class="text-muted mt-4 footer-post">
+                <i class="far fa-calendar-alt"></i> {{ .CreateAt.Format "02-01-2006" }}
+                <i class="fas fa-user-circle"></i> {{ .AuthorNick }}
+            </p>
+        </div>
+        <hr class="my-4" />
+        {{ template "likes" . }}
     </div>
+</div>
 {{ end }}
