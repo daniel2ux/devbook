@@ -34,7 +34,7 @@ function likePost(e) {
 		method: 'POST',
 	})
 		.done(() => {
-			const likeCounter = clickedElement.next('span');
+			const likeCounter = clickedElement.closest('.fa-heart');
 			const likeQtdy = parseInt(likeCounter.text());
 			likeCounter.text(likeQtdy + 1);
 
@@ -96,7 +96,7 @@ function updatePost() {
 				text: 'update success...',
 				icon: 'success',
 				buttons: false,
-				timer: 3000,
+				timer: 2000,
 			}).then(function () {
 				window.location = '/home';
 			});

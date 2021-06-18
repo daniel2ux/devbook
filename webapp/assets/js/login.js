@@ -14,7 +14,12 @@ function login(e) {
 		.done(() => {
 			window.location = '/home';
 		})
-		.fail((err) => {
-			console.log(err);
+		.fail(() => {
+			swal({
+				text: 'Invalid Access!',
+				icon: 'error',
+				buttons: false,
+				timer: 2000,
+			});
 		});
 }
