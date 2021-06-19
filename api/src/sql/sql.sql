@@ -14,8 +14,8 @@ CREATE TABLE users (
     nick VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(50) NOT NULL UNIQUE,
     PASSWORD VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
-) ENGINE = INNODB;
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE = INNODB CHARACTER SET latin1;
 
 CREATE TABLE followers (
     user_id int NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE followers (
     follower_id int NOT NULL,
     FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, follower_id)
-) ENGINE = INNODB;
+) ENGINE = INNODB CHARACTER SET latin1;
 
 CREATE TABLE posts (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -33,4 +33,4 @@ CREATE TABLE posts (
     FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE,
     likes int DEFAULT 0,
     created_at timestamp DEFAULT CURRENT_TIMESTAMP
-) ENGINE = INNODB;
+) ENGINE = INNODB CHARACTER SET latin1;

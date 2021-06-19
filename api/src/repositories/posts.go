@@ -70,7 +70,7 @@ func (repo posts) GetPosts(userID uint64) ([]models.Post, error) {
 		SELECT DISTINCT p.*, u.nick
 		  FROM posts p INNER JOIN users u
 		    		      ON u.id = p.author_id
-					   INNER JOIN followers f
+					   LEFT OUTER JOIN followers f
 					      ON p.author_id = f.user_id
 		 WHERE u.id = ?
 		    OR f.follower_id = ?

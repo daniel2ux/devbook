@@ -39,7 +39,7 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 	nameOrNick = fmt.Sprintf("%%%s%%", nameOrNick)
 
 	result, err := repo.db.Query(
-		"SELECT id, name, nick, email FROM users WHERE name LIKE ? OR nick LIKE ?",
+		"SELECT id, name, nick, email, created_at FROM users WHERE name LIKE ? OR nick LIKE ?",
 		nameOrNick, nameOrNick)
 	if err != nil {
 		return nil, err
@@ -55,6 +55,7 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 			&user.Name,
 			&user.Nick,
 			&user.Email,
+			&user.CreateAt,
 		); err != nil {
 			return nil, err
 		}
@@ -66,7 +67,7 @@ func (repo users) GetUsers(nameOrNick string) ([]models.User, error) {
 }
 
 func (repo users) GetUserByID(userID uint64) (models.User, error) {
-	result, err := repo.db.Query("SELECT id, name, nick, email FROM users WHERE ID = ?", userID)
+	result, err := repo.db.Query("SELECT id, name, nick, email, created_at FROM users WHERE ID = ?", userID)
 	if err != nil {
 		return models.User{}, err
 	}
@@ -80,6 +81,7 @@ func (repo users) GetUserByID(userID uint64) (models.User, error) {
 			&user.Name,
 			&user.Nick,
 			&user.Email,
+			&user.CreateAt,
 		); err != nil {
 			return models.User{}, err
 		}
