@@ -25,7 +25,7 @@
 		/>
 		<style type="text/css">
 			.form-control:focus {
-				box-shadow: 0px 0px 0px 0.10rem rgba(3, 78, 189, 0.5);
+				box-shadow: 0px 0px 0px;
 			}
 		</style>
 	</head>
@@ -48,9 +48,10 @@
 								</label>
 								<input
 									type="text"
-									class="form-control border-0 bg-light autofocus"
+									class="form-control rounded-0 border-5 border-top-0 border-bottom-0 border-end-0"
 									id="title"
 									name="title"
+									placeholder="enter post title..."
 									required
 								/>
 							</div>
@@ -62,10 +63,11 @@
 									Post
 								</label>
 								<textarea
-									class="form-control border-0 bg-light"
+									class="form-control rounded-0 border-5 border-top-0 border-bottom-0 border-end-0"
 									id="post"
 									name="post"
 									rows="7"
+									placeholder="enter post text..."
 									required
 								></textarea>
 							</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="X-UA-Compatible"
+            content="IE=edge"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>DevBook Users</title>
+
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/assets/css/bootstrap.css"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/assets/css/devbook.css"
+        />
+        <style type="text/css">
+            .form-control:focus {
+                box-shadow: 0px 0px 0px 0.10rem rgba(3, 78, 189, 0.5);
+            }
+        </style>
+    </head>
+
+    <body>
+        {{ template "_header" }}
+        <div class="container-fluid">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card-body">
+                        <div class="card-header">Users Found</div>
+                        <ul class="list-group list-group-flush">
+                            {{ range . }}
+                            <li class="list-group-item">
+                                {{ .Name }} - {{ .Nick }} - Member sice: {{ .CreateAt.Format "02-01-2006" }}
+                            </li>
+                            {{ else }}
+                            <li class="list-group-item">Users not found for criteria</li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ template "_footer" }}
+        {{ template "_scripts" }}
+    </body>
+
+</html>

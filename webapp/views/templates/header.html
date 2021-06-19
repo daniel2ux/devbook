@@ -37,11 +37,13 @@
 						>Meu Perfil</a>
 					</li>
 					<li class="nav-item">
-						<form class="d-flex">
+						<form
+							class="d-flex"
+							action="/get-users"
+							method="GET"
+						>
 							<input
 								class="form-control me-2"
-								action="/get-users"
-								method="GET"
 								type="search"
 								placeholder="Search"
 								aria-label="Search"
