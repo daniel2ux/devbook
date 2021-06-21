@@ -34,10 +34,6 @@ function likePost(e) {
 		method: 'POST',
 	})
 		.done(() => {
-			const likeCounter = clickedElement.closest('.fa-heart');
-			const likeQtdy = parseInt(likeCounter.text());
-			likeCounter.text(likeQtdy + 1);
-
 			clickedElement.addClass('dislike-post');
 			clickedElement.addClass('text-danger');
 			clickedElement.removeClass('like-post');
@@ -61,10 +57,6 @@ function dislikePost(e) {
 		method: 'POST',
 	})
 		.done(() => {
-			const likeCounter = clickedElement.next('span');
-			const likeQtdy = parseInt(likeCounter.text());
-			likeCounter.text(likeQtdy - 1);
-
 			clickedElement.removeClass('dislike-post');
 			clickedElement.removeClass('text-danger');
 			clickedElement.addClass('like-post');

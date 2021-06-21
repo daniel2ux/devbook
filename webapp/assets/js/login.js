@@ -15,11 +15,10 @@ function login(e) {
 			window.location = '/home';
 		})
 		.fail(() => {
-			swal({
-				text: 'Invalid Access!',
-				icon: 'error',
-				buttons: false,
-				timer: 2000,
-			});
+			toastr.options = {
+				"progressBar": true,
+				"timeOut": "3000",
+			};
+			toastr.error('Access Unauthorized');
 		});
 }

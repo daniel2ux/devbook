@@ -23,6 +23,10 @@
 			type="text/css"
 			href="/assets/css/devbook.css"
 		/>
+		<link
+			rel="stylesheet"
+			href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+		>
 		<style type="text/css">
 			.form-control:focus {
 				box-shadow: 0px 0px 0px;
@@ -48,7 +52,15 @@
 								</label>
 								<input
 									type="text"
-									class="form-control rounded-0 border-5 border-top-0 border-bottom-0 border-end-0"
+									class="
+										form-control 
+										form-control-lg 
+										rounded-0 
+										border-5 
+										border-top-0 
+										border-bottom-0 
+										border-end-0 
+										bg-light"
 									id="title"
 									name="title"
 									placeholder="enter post title..."
@@ -63,10 +75,18 @@
 									Post
 								</label>
 								<textarea
-									class="form-control rounded-0 border-5 border-top-0 border-bottom-0 border-end-0"
+									class="
+										form-control
+										form-control-lg 
+										rounded-0 
+										border-5 
+										border-top-0 
+										border-bottom-0
+										border-end-0 
+										bg-light"
 									id="post"
 									name="post"
-									rows="7"
+									rows="3"
 									placeholder="enter post text..."
 									required
 								></textarea>
@@ -97,11 +117,7 @@
 		{{ template "_scripts" }}
 
 		<script src="/assets/js/posts.js"></script>
-		<script>
-			$(document).ready(function () {
-				$('[autofocus]:first').focus();
-			})
-		</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	</body>
 
 </html>

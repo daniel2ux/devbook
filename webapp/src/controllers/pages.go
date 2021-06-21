@@ -117,3 +117,15 @@ func LoadUsersPage(w http.ResponseWriter, r *http.Request) {
 
 	utils.LoadTemplate(w, "users.html", users)
 }
+
+func LoadUserProfile(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		answers.JSON(w, http.StatusBadRequest, answers.APIError{Error: err.Error()})
+		return
+	}
+
+	user, err := models.GetFullUserByID(userID, r)
+	fmt.Println(user, err)
+}

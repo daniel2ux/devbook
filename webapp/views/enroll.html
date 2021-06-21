@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
 		<title>User Enroll</title>
 
-		<link rel="stylesheet" href="/assets/css/login.css" />
+		<link
+			rel="stylesheet"
+			href="/assets/css/login.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+		>
 	</head>
+
 	<body>
 		<div class="container-login">
 			<div>
-				<form class="devbook-form" id="form-enroll-user">
+				<form
+					class="devbook-form"
+					id="form-enroll-user"
+				>
 					<span>Create your account now!</span>
 					<div>
 						<input
@@ -61,12 +79,17 @@
 					<p class="p-with-link">
 						Click <a href="/login">here</a> to login
 					</p>
-					<button type="submit" class="btn-devbook">Enroll</button>
+					<button
+						type="submit"
+						class="btn-devbook"
+					>Enroll</button>
 				</form>
 			</div>
 		</div>
 
 		{{ template "_scripts" }}
 		<script src="/assets/js/enroll.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	</body>
+
 </html>

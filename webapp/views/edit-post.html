@@ -23,7 +23,7 @@
 		/>
 		<style type="text/css">
 			.form-control:focus {
-				box-shadow: 0px 0px 0px 0.10rem rgba(3, 78, 189, 0.5);
+				box-shadow: 0px 0px 0px;
 			}
 		</style>
 	</head>
@@ -40,7 +40,16 @@
 						type="text"
 						name="title"
 						id="title"
-						class="form-control my-2 border-5 border-top-0 border-bottom-0 border-end-0 bg-light"
+						class="
+							form-control
+							form-control-lg
+							rounded-0
+							my-2 
+							border-5 
+							border-top-0 
+							border-bottom-0 
+							border-end-0 
+							bg-light"
 						value="{{ .Title }}"
 					/>
 				</div>
@@ -49,7 +58,16 @@
 					<textarea
 						name="post"
 						id="post"
-						class="form-control my-2 border-5 border-top-0 border-bottom-0 border-end-0 bg-light"
+						class="
+							form-control 
+							form-control-lg
+							rounded-0
+							my-2 
+							border-5 
+							border-top-0 
+							border-bottom-0 
+							border-end-0 
+							bg-light"
 						rows="10"
 					>{{ .Content }}</textarea>
 				</div>

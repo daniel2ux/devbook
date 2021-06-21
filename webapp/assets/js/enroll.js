@@ -4,7 +4,8 @@ function enroll(e) {
 	e.preventDefault();
 
 	if ($('#password').val() != $('#repass').val()) {
-		swal('Atention!', 'Passwords no match', 'error');
+		toastr.options = { "progressBar": true };
+		toastr.error('Passwords no match');
 		return;
 	}
 
@@ -19,20 +20,19 @@ function enroll(e) {
 		},
 	})
 		.done(() => {
-			swal('Sucesso!', 'User created!', 'success').then(() => {
-				$.ajax({
-					url: '/login',
-					method: 'POST',
-					data: {
-						email: $('#email').val(),
-						password: $('#password').val(),
-					},
-				}).done(() => {
-					window.location = '/home';
-				});
+			$.ajax({
+				url: '/login',
+				method: 'POST',
+				data: {
+					email: $('#email').val(),
+					password: $('#password').val(),
+				},
+			}).done(() => {
+				toastr.success('User was created');
+				window.location = '/home';
 			});
 		})
-		.fail((err) => {
-			swal('Atention!', err, 'error');
+		.fail(() => {
+			toastr.error('Error occurred when creating user');
 		});
 }

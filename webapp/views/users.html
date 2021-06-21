@@ -40,7 +40,11 @@
                         <ul class="list-group list-group-flush">
                             {{ range . }}
                             <li class="list-group-item">
-                                {{ .Name }} - {{ .Nick }} - Member sice: {{ .CreateAt.Format "02-01-2006" }}
+                                {{ .Name }} - <a
+                                    href="/users/{{ .ID }}"
+                                    class="btn border-0 btn-sm btn-outline-primary"
+                                >{{ .Nick }}</a> - Member sice:
+                                {{ .CreateAt.Format "02-01-2006" }}
                             </li>
                             {{ else }}
                             <li class="list-group-item">Users not found for criteria</li>
