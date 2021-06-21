@@ -112,29 +112,40 @@ function deletePost(e) {
 	const postID = post.data('post-id');
 	clickedElement.prop('disabled', true);
 
-	swal({
-		title: 'Atention!',
-		text: 'The publication will be permanently deleted. Are you sure?',
-		icon: 'warning',
-		buttons: true,
-		dangerMode: true,
-	}).then((willDelete) => {
-		if (willDelete) {
-			$.ajax({
-				url: `/posts/${postID}`,
-				method: 'DELETE',
-			})
-				.done(() => {
-					post.fadeOut('slow', function () {
-						$(this).remove();
+	iziToast.show({
+		theme: 'dark',
+		timeout: 10000,
+		overlay: true,
+		displayMode: 'once',
+		close: false,
+		progressBarColor: 'rgb(0, 255, 184)',
+		id: 'question',
+		zindex: 999,
+		title: 'Atention',
+		message: 'Are you sure about that?',
+		position: 'center',
+		buttons: [
+			['<button><b>YES</b></button>', (instance, toast) => {
+				$.ajax({
+					url: `/posts/${postID}`,
+					method: 'DELETE',
+				})
+					.done(() => {
+						post.fadeOut('slow', function () {
+							$(this).remove();
+						});
+					})
+					.fail((err) => {
+						alert('delete fail!');
+					})
+					.always(() => {
+						clickedElement.prop('disabled', false);
 					});
-				})
-				.fail((err) => {
-					alert('delete fail!');
-				})
-				.always(() => {
-					clickedElement.prop('disabled', false);
-				});
-		}
+				instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+			}],
+			['<button>NO</button>', function (instance, toast) {
+				instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+			}, true],
+		]
 	});
 }

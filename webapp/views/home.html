@@ -25,11 +25,12 @@
 		/>
 		<link
 			rel="stylesheet"
-			href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
-		>
+			type="text/css"
+			href="/assets/css/iziToast.min.css"
+		/>
 		<style type="text/css">
 			.form-control:focus {
-				box-shadow: 0px 0px 0px;
+				box-shadow: 0px 0px 2px 0.10rem rgba(52, 152, 219, 1.0);
 			}
 		</style>
 	</head>
@@ -54,13 +55,7 @@
 									type="text"
 									class="
 										form-control 
-										form-control-lg 
-										rounded-0 
-										border-5 
-										border-top-0 
-										border-bottom-0 
-										border-end-0 
-										bg-light"
+										form-control-lg"
 									id="title"
 									name="title"
 									placeholder="enter post title..."
@@ -77,13 +72,7 @@
 								<textarea
 									class="
 										form-control
-										form-control-lg 
-										rounded-0 
-										border-5 
-										border-top-0 
-										border-bottom-0
-										border-end-0 
-										bg-light"
+										form-control-lg"
 									id="post"
 									name="post"
 									rows="3"
@@ -117,6 +106,7 @@
 		{{ template "_scripts" }}
 
 		<script src="/assets/js/posts.js"></script>
+		<script src="/assets/js/iziToast.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	</body>
 

@@ -15,10 +15,10 @@ function login(e) {
 			window.location = '/home';
 		})
 		.fail(() => {
-			toastr.options = {
-				"progressBar": true,
-				"timeOut": "3000",
-			};
-			toastr.error('Access Unauthorized');
+			iziToast.error({
+				title: 'Error',
+				message: 'Invalid Access!',
+				position: 'topRight',
+			});
 		});
 }
