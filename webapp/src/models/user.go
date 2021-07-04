@@ -17,7 +17,7 @@ type User struct {
 	Nick      string    `json:"nick"`
 	CreateAt  time.Time `json:"createAt"`
 	Followers []User    `json:"followers"`
-	Follow    []User    `json:"follow"`
+	Follows   []User    `json:"follows"`
 	Posts     []Post    `json:"posts"`
 }
 
@@ -68,7 +68,7 @@ func GetFullUserByID(userID uint64, r *http.Request) (User, error) {
 	}
 
 	user.Followers = followers
-	user.Follow = follows
+	user.Follows = follows
 	user.Posts = posts
 	return user, nil
 }

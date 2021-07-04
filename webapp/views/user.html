@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DevBook</title>
+
+        <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/devbook.css" />
+    </head>
+
+    <body>
+        {{ template "_header" }}
+        {{ $FollwedByLoggedUser := false }}
+        {{ range .User.Followers }}
+        {{ if (eq .ID $.UserLoggedID) }}
+        {{ $FollwedByLoggedUser = true }}
+        {{ end }}
+        {{ end }}
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            User Profile
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <h5 class="card-title">{{ .User.Name }}</h5>
+                            </div>
+                            <p class="card-text">
+                                <i class="fa fa-user-circle"></i> {{ .User.Nick }}
+                                <i class="fa fa-calendar"></i> since:
+                                {{ .User.CreateAt.Format "02-01-2006" }}
+                                <i class="fa fa-users"></i>
+                                <a href="#" style="text-decoration: none">Followers</a> {{ len .User.Followers }}
+                                <i class="fa fa-users"></i>
+                                <a href="#" style="text-decoration: none">Following</a> {{ len .User.Follows }}
+                            </p>
+                            {{ if ($FollwedByLoggedUser)}}
+                            <a href="#" class="btn btn-info">Parar de seguir</a>
+                            {{ else }}
+                            <a href="#" class="btn btn-info">Seguir</a>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ template "_scripts" }}
+    </body>
+
+
+</html>

@@ -1,28 +1,18 @@
 {{ define "likes" }}
 <button class="btn btn-outline-primary btn-sm">
-    <i
-        class="fas fa-heart like-post"
-        style="cursor: pointer"
-    ></i>
+    <i class="fas fa-heart like-post" style="cursor: pointer"></i>
 </button>
 {{ end }}
 
 {{ define "edit" }}
-<a
-    href="/posts/{{ .ID }}/edit"
-    style="text-decoration: none"
-    class="btn btn-sm btn-outline-primary"
->
+<a href="/posts/{{ .ID }}/edit" style="text-decoration: none" class="btn btn-sm btn-outline-primary">
     <i class="fa fa-edit"></i>
 </a>
 {{ end }}
 
 {{ define "delete" }}
 <button class="btn btn-sm btn-outline-danger">
-    <i
-        class="fa fa-trash delete-post"
-        style="cursor: pointer"
-    ></i>
+    <i class="fa fa-trash delete-post" style="cursor: pointer"></i>
 </button>
 {{ end }}
 
@@ -32,10 +22,7 @@
 {{ end }}
 
 {{ define "post-with-allow" }}
-<div
-    class="card mb-2 border-start-0 border-top-0 border-end-0 bg-light"
-    data-post-id="{{ .ID }}"
->
+<div class="card mb-2 shadow-sm bg-light" data-post-id="{{ .ID }}">
     <div class="card-body">
         <h5 class="card-title">{{ .Title }}</h5>
         <div class="card-text">
@@ -54,10 +41,7 @@
 {{ end }}
 
 {{ define "post-without-allow" }}
-<div
-    class="card mb-2 border-start-0 border-top-0 border-end-0 bg-light"
-    data-post-id="{{ .ID }}"
->
+<div class="card mb-2 shadow-sm bg-light" data-post-id="{{ .ID }}">
     <div class="card-body">
         <h5 class="card-title">{{ .Title }}</h5>
         <div class="card-text">

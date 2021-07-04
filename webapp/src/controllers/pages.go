@@ -127,5 +127,19 @@ func LoadUserProfile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user, err := models.GetFullUserByID(userID, r)
-	fmt.Println(user, err)
+	if err != nil {
+		answers.JSON(w, http.StatusInternalServerError, answers.APIError{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Read(r)
+	userLoggedID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	utils.LoadTemplate(w, "user.html", struct {
+		User         models.User
+		UserLoggedID uint64
+	}{
+		User:         user,
+		UserLoggedID: userLoggedID,
+	})
 }
